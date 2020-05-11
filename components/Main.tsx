@@ -6,12 +6,7 @@ import { MaskType } from "../types/mask";
 
 const Container = styled.div``;
 
-interface IProps {
-  maskData: MaskType;
-  addr: string;
-}
-
-const Main: NextPage<IProps> = ({ maskData, addr }) => {
+const Main: NextPage = () => {
   return (
     <Container>
       <Link href="/mask">
