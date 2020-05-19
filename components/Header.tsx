@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { NextPage } from "next";
 import Nav from "../public/static/svg/navigation.svg";
+import OutsideClickHandler from "react-outside-click-handler";
 
 const Container = styled.div`
   @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
@@ -85,20 +86,6 @@ const Container = styled.div`
           font-size: 2em;
         }
       }
-      .header-navigation-info-wrapper {
-        position: absolute;
-        .header-navigation-info {
-          width: 100%;
-          height: 100%;
-          background-color: #060718;
-          position: fixed;
-          opacity: 0.7;
-          .header-navigation-font {
-            color: white;
-            font-size: 4em;
-          }
-        }
-      }
     }
   }
   .header-context-container {
@@ -107,6 +94,21 @@ const Container = styled.div`
       font-size: 2em;
       font-family: "Noto Sans KR";
       font-weight: 500;
+    }
+  }
+  .header-navigation-info-wrapper {
+    position: absolute;
+    z-index: 10;
+    .header-navigation-info {
+      width: 100%;
+      height: 100%;
+      background-color: #060718;
+      position: fixed;
+      opacity: 0.7;
+      .header-navigation-font {
+        color: white;
+        font-size: 4em;
+      }
     }
   }
 `;
@@ -118,13 +120,6 @@ const Header: NextPage = () => {
   };
   return (
     <Container>
-      {navShow && (
-        <div className="header-navigation-info-wrapper">
-          <div className="header-navigation-info">
-            <div className="header-navigation-font">hi</div>
-          </div>
-        </div>
-      )}
       <div className="header-title-container">
         <div className="header-title-wrapper">
           <div className="header-title">🦝코로나 관련 정보</div>
@@ -133,6 +128,21 @@ const Header: NextPage = () => {
           </div>
         </div>
       </div>
+      <OutsideClickHandler
+        onOutsideClick={() => {
+          if (navShow) {
+            setNaviShow(false);
+          }
+        }}
+      >
+        {navShow && (
+          <div className="header-navigation-info-wrapper">
+            <div className="header-navigation-info">
+              <div className="header-navigation-font">hi</div>
+            </div>
+          </div>
+        )}
+      </OutsideClickHandler>
       <div className="header-background">
         <div className="header-context-container">
           <div className="header-context">
