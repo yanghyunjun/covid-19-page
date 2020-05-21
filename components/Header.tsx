@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import styled from "styled-components";
 import { NextPage } from "next";
 import Nav from "../public/static/svg/navigation.svg";
@@ -156,6 +156,28 @@ const Header: NextPage = () => {
   const toggleNavi = () => {
     setNaviShow(!navShow);
   };
+  const offsetTops = [];
+  const scrollHandler = useCallback(() => {
+    for (let i = 0; i < offsetTops.length; i++) {
+      if (window.pageYOffset < offsetTops[i]) {
+        setFocus(i);
+        break;
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const h1titles = Array.from(document.getElementById("h1"));
+      const tempOffsetTops: number[] = [];
+      h1titles.map((title) => tempOffsetTops.push(title.offsetTop));
+      offsetTops = tempOffsetTops;
+      setTitles(h1titles);
+      scrollHandler();
+    }
+    window.addEventListener("scroll", scrollHandler);
+    return () => window.removeEventListener("scroll", scrollHandler);
+  }, [option, width]);
   // document.getElementById("scroll");
   // element.scrollIntoView();
   return (
