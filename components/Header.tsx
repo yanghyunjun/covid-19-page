@@ -89,7 +89,6 @@ const Container = styled.div`
           position: fixed;
           z-index: 21;
           padding: 10px;
-          /* background-color: rgb(128, 128, 128); */
           @media (max-width: 416px) {
             font-size: 2em;
             width: 1em;
@@ -127,16 +126,24 @@ const Container = styled.div`
       }
     }
   }
+  .header-navigation-info-background-fadein {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.5s, opacity 0.5s linear;
+  }
   .header-navigation-info-background {
     position: fixed;
     z-index: 10;
     width: 100%;
     height: 100%;
     background-color: rgba(6, 7, 24, 0.8);
-    align-items: center;
     display: flex;
+    align-items: center;
     justify-content: center;
     flex-direction: column;
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.5s linear;
     .header-navigation-info {
       z-index: 11;
       .header-navigation-font {
@@ -156,30 +163,6 @@ const Header: NextPage = () => {
   const toggleNavi = () => {
     setNaviShow(!navShow);
   };
-  const offsetTops = [];
-  const scrollHandler = useCallback(() => {
-    for (let i = 0; i < offsetTops.length; i++) {
-      if (window.pageYOffset < offsetTops[i]) {
-        setFocus(i);
-        break;
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const h1titles = Array.from(document.getElementById("h1"));
-      const tempOffsetTops: number[] = [];
-      h1titles.map((title) => tempOffsetTops.push(title.offsetTop));
-      offsetTops = tempOffsetTops;
-      setTitles(h1titles);
-      scrollHandler();
-    }
-    window.addEventListener("scroll", scrollHandler);
-    return () => window.removeEventListener("scroll", scrollHandler);
-  }, [option, width]);
-  // document.getElementById("scroll");
-  // element.scrollIntoView();
   return (
     <Container>
       <div className="header-title-container">
@@ -203,15 +186,23 @@ const Header: NextPage = () => {
           </div>
         </div>
       </div>
-      {navShow && (
-        <div className="header-navigation-info-background">
-          <div className="header-navigation-info">
+
+      <div
+        className={`${
+          navShow
+            ? "header-navigation-info-background"
+            : "header-navigation-info-background-fadein"
+        }`}
+      >
+        <div className="header-navigation-info">
+          {navShow && (
             <Link href="/mask">
               <a className="header-navigation-font">공적마스크 정보</a>
             </Link>
-          </div>
+          )}
         </div>
-      )}
+      </div>
+
       <div className="header-background">
         <div className="header-context-container">
           <div className="header-context">
