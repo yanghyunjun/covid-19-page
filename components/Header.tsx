@@ -66,18 +66,38 @@ const Container = styled.div`
         background-position: 0% 50%;
       }
     }
-    .header-context {
-      color: white;
-      font-size: 2em;
-      font-family: "Noto Sans KR";
-      font-weight: 500;
-      @media (min-width: 416px) {
-        display: flex;
+    .header-context-wrapper {
+      display: flex;
+      @media (max-width: 597px) {
+        flex-direction: column;
+      }
+      .header-context {
+        color: white;
+        font-family: "Noto Sans KR";
+        font-weight: 500;
+        font-size: 2em;
+        @media (min-width: 1024px) {
+          font-size: 2.5em;
+        }
+        @media (min-width: 1280px) {
+          font-size: 3em;
+        }
       }
     }
-    .header-context-arrow {
-      width: 3em;
-      height: 3em;
+    .header-context-arrow-wrapper {
+      position: relative;
+      .header-context-arrow {
+        position: absolute;
+        margin-left: -25px;
+        margin-top: 60px;
+        width: 4em;
+        height: 4em;
+        cursor: pointer;
+        @media (max-width: 768px) {
+          width: 3em;
+          height: 3em;
+        }
+      }
     }
   }
   .header-title-container {
@@ -184,12 +204,19 @@ const Container = styled.div`
 const Header: NextPage = () => {
   const [navShow, setNaviShow] = useState(false);
   const [navPosition, setNavPosition] = useState(false);
+  const toggleArrow = () => {
+    if (window.innerWidth < 768) {
+      window.scroll({ top: 480, left: 0, behavior: "smooth" });
+    } else if (window.innerWidth >= 768) {
+      window.scroll({ top: 768, left: 0, behavior: "smooth" });
+    }
+  };
   const toggleNavi = () => {
     setNaviShow(!navShow);
   };
   const Scrollhandler = () => {
     const scrollPosition = window.scrollY;
-    if (scrollPosition > 480) {
+    if (scrollPosition > 380) {
       setNavPosition(true);
     } else {
       setNavPosition(false);
@@ -244,10 +271,13 @@ const Header: NextPage = () => {
       </div>
 
       <div className="header-background">
-        <div className="header-context">
-          <div>COVID-19 Related Information Platform</div>
+        <div className="header-context-wrapper">
+          <div className="header-context">COVID-19 Related</div>
+          <div className="header-context"> Information Platform</div>
         </div>
-        <Arrow className="header-context-arrow" />
+        <div className="header-context-arrow-wrapper">
+          <Arrow className="header-context-arrow" onClick={toggleArrow} />
+        </div>
       </div>
     </Container>
   );
