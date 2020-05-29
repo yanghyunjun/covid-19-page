@@ -25,6 +25,13 @@ const Main: NextPage = () => {
       <div className="test">ㅎㅇ</div>
       <div className="test">ㅎㅇ</div>
       <div className="test">ㅎㅇ</div>
+      <div className="test">ㅎㅇ</div>
+      <div className="test">ㅎㅇ</div>
+      <div className="test">ㅎㅇ</div>
+      <div className="test">ㅎㅇ</div>
+      <div className="test">ㅎㅇ</div>
+      <div className="test">ㅎㅇ</div>
+      <div className="test">ㅎㅇ</div>
     </Container>
   );
 };

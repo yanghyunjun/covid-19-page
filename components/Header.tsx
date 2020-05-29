@@ -4,13 +4,17 @@ import { NextPage } from "next";
 import Nav from "../public/static/svg/navigation.svg";
 import NaviClose from "../public/static/svg/navClose.svg";
 import Link from "next/link";
+import Arrow from "../public/static/svg/arrow-down-circle.svg";
 
 const Container = styled.div`
-  @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
   @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
+  @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
   .header-background {
     width: 100%;
     height: 768px;
+    @media (max-width: 768px) {
+      height: 480px;
+    }
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -62,6 +66,19 @@ const Container = styled.div`
         background-position: 0% 50%;
       }
     }
+    .header-context {
+      color: white;
+      font-size: 2em;
+      font-family: "Noto Sans KR";
+      font-weight: 500;
+      @media (min-width: 416px) {
+        display: flex;
+      }
+    }
+    .header-context-arrow {
+      width: 3em;
+      height: 3em;
+    }
   }
   .header-title-container {
     position: absolute;
@@ -70,7 +87,9 @@ const Container = styled.div`
     .header-title-wrapper {
       display: flex;
       justify-content: space-around;
+
       .header-title {
+        margin-left: -40px;
         margin-top: 5px;
         font-size: 3em;
         color: white;
@@ -89,22 +108,22 @@ const Container = styled.div`
           position: fixed;
           z-index: 21;
           padding: 10px;
+          transition: background-color 0.3s ease-out;
           @media (max-width: 416px) {
             font-size: 2em;
             width: 1em;
             height: 1em;
           }
         }
-        .header-navigation-disappear {
-          display: none;
-        }
-        .header-navigatin-info-close {
+        .header-navigation-scroll {
           width: 3em;
           height: 3em;
           cursor: pointer;
-          z-index: 20;
           position: fixed;
+          z-index: 21;
           padding: 10px;
+          background-color: rgba(6, 7, 24, 0.5);
+          transition: background-color 0.3s ease-in;
           @media (max-width: 416px) {
             font-size: 2em;
             width: 1em;
@@ -112,17 +131,21 @@ const Container = styled.div`
           }
         }
       }
-    }
-  }
-  .header-context-container {
-    .header-context {
-      color: white;
-      font-size: 2em;
-      font-family: "Noto Sans KR";
-      font-weight: 500;
-      @media (max-width: 416px) {
-        display: flex;
-        flex-wrap: wrap;
+      .header-navigation-disappear {
+        display: none;
+      }
+      .header-navigatin-info-close {
+        width: 3em;
+        height: 3em;
+        cursor: pointer;
+        z-index: 20;
+        position: fixed;
+        padding: 10px;
+        @media (max-width: 416px) {
+          font-size: 2em;
+          width: 1em;
+          height: 1em;
+        }
       }
     }
   }
@@ -160,9 +183,22 @@ const Container = styled.div`
 
 const Header: NextPage = () => {
   const [navShow, setNaviShow] = useState(false);
+  const [navPosition, setNavPosition] = useState(false);
   const toggleNavi = () => {
     setNaviShow(!navShow);
   };
+  const Scrollhandler = () => {
+    const scrollPosition = window.scrollY;
+    if (scrollPosition > 480) {
+      setNavPosition(true);
+    } else {
+      setNavPosition(false);
+    }
+  };
+  useEffect(() => {
+    window.addEventListener("scroll", Scrollhandler);
+    return () => window.removeEventListener("scroll", Scrollhandler);
+  });
   return (
     <Container>
       <div className="header-title-container">
@@ -171,7 +207,11 @@ const Header: NextPage = () => {
           <div className="header-navigation-wrapper">
             <Nav
               className={`${
-                navShow ? "header-navigation-disappear" : "header-navigation"
+                navShow
+                  ? "header-navigation-disappear"
+                  : navPosition
+                  ? "header-navigation-scroll"
+                  : "header-navigation"
               }`}
               onClick={toggleNavi}
             />
@@ -204,11 +244,10 @@ const Header: NextPage = () => {
       </div>
 
       <div className="header-background">
-        <div className="header-context-container">
-          <div className="header-context">
-            COVID-19 Related Information Platform
-          </div>
+        <div className="header-context">
+          <div>COVID-19 Related Information Platform</div>
         </div>
+        <Arrow className="header-context-arrow" />
       </div>
     </Container>
   );
