@@ -14,24 +14,8 @@ const Main: NextPage = () => {
   return (
     <Container>
       <Link href="/mask">
-        <a id="scoll">마스크판매 약국 알아보기</a>
+        <a>마스크판매 약국 알아보기</a>
       </Link>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
-      <div className="test">ㅎㅇ</div>
     </Container>
   );
 };
