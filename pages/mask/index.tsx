@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { NextPage } from "next";
 import { useRouter } from "next/router";
+import Header from "../../components/Header";
 
 const Container = styled.div``;
 
@@ -10,6 +11,7 @@ const index: NextPage = () => {
   const router = useRouter();
   return (
     <Container>
+      <Header />
       <div>공적 마스크판매 정보</div>
       <div>주소검색</div>
       <div>

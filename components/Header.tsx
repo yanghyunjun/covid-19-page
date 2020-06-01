@@ -5,6 +5,7 @@ import Nav from "../public/static/svg/navigation.svg";
 import NaviClose from "../public/static/svg/navClose.svg";
 import Link from "next/link";
 import Arrow from "../public/static/svg/arrow-down-circle.svg";
+import { useRouter } from "next/router";
 
 const Container = styled.div`
   @import url(//fonts.googleapis.com/earlyaccess/notosanskr.css);
@@ -84,6 +85,19 @@ const Container = styled.div`
         }
       }
     }
+    .header-context2-wrapper {
+      display: flex;
+      margin-top: 30px;
+      @media (max-width: 656px) {
+        flex-direction: column;
+        margin-top: 10px;
+      }
+      .header-context2 {
+        color: white;
+        font-family: "Noto Sans KR";
+        font-size: 1em;
+      }
+    }
     .header-context-arrow-wrapper {
       position: relative;
       .header-context-arrow {
@@ -115,7 +129,8 @@ const Container = styled.div`
         color: white;
         font-weight: 600;
         font-family: "Nanum Pen Script";
-        @media (max-width: 416px) {
+        cursor: pointer;
+        @media (max-width: 505px) {
           font-size: 2em;
         }
       }
@@ -129,7 +144,7 @@ const Container = styled.div`
           z-index: 21;
           padding: 10px;
           transition: background-color 0.3s ease-out;
-          @media (max-width: 416px) {
+          @media (max-width: 505px) {
             font-size: 2em;
             width: 1em;
             height: 1em;
@@ -144,7 +159,7 @@ const Container = styled.div`
           padding: 10px;
           background-color: rgba(6, 7, 24, 0.5);
           transition: background-color 0.3s ease-in;
-          @media (max-width: 416px) {
+          @media (max-width: 505px) {
             font-size: 2em;
             width: 1em;
             height: 1em;
@@ -161,7 +176,7 @@ const Container = styled.div`
         z-index: 20;
         position: fixed;
         padding: 10px;
-        @media (max-width: 416px) {
+        @media (max-width: 505px) {
           font-size: 2em;
           width: 1em;
           height: 1em;
@@ -193,7 +208,7 @@ const Container = styled.div`
         color: white;
         font-size: 3em;
         text-decoration: none;
-        @media (max-width: 416px) {
+        @media (max-width: 505px) {
           font-size: 2em;
         }
       }
@@ -204,6 +219,7 @@ const Container = styled.div`
 const Header: NextPage = () => {
   const [navShow, setNaviShow] = useState(false);
   const [navPosition, setNavPosition] = useState(false);
+  const router = useRouter();
   const toggleArrow = () => {
     if (window.innerWidth < 768) {
       window.scroll({ top: 480, left: 0, behavior: "smooth" });
@@ -230,7 +246,13 @@ const Header: NextPage = () => {
     <Container>
       <div className="header-title-container">
         <div className="header-title-wrapper">
-          <div className="header-title">🦝코로나 관련 정보</div>
+          <div
+            role="button"
+            className="header-title"
+            onClick={() => router.push("/")}
+          >
+            🦝코로나 관련 정보
+          </div>
           <div className="header-navigation-wrapper">
             <Nav
               className={`${
@@ -274,6 +296,13 @@ const Header: NextPage = () => {
         <div className="header-context-wrapper">
           <div className="header-context">COVID-19 Related</div>
           <div className="header-context"> Information Platform</div>
+        </div>
+        <div className="header-context2-wrapper">
+          <div className="header-context2">Corona Status in Korea +&nbsp;</div>
+          <div className="header-context2">Corona Status in World +&nbsp;</div>
+          <div className="header-context2">
+            Public Mask Sales Pharmacy in Korea
+          </div>
         </div>
         <div className="header-context-arrow-wrapper">
           <Arrow className="header-context-arrow" onClick={toggleArrow} />
