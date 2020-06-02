@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 
 const Container = styled.div`
+  width: 100%;
   height: 48px;
   padding-left: 200px;
   display: flex;
@@ -29,6 +30,7 @@ const Container = styled.div`
     padding-left: 30px;
     align-items: center;
     background-color: #f1f1f1;
+    border-bottom: 2px solid #ff9c0d;
     cursor: pointer;
     :last-child {
       border-right: 1px solid #ccc;
