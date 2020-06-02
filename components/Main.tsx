@@ -2,7 +2,6 @@ import React from "react";
 import styled from "styled-components";
 import { NextPage } from "next";
 import Link from "next/link";
-import { MaskType } from "../types/mask";
 import { mainData } from "../data";
 
 const Container = styled.div`
