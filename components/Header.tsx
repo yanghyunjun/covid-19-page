@@ -286,7 +286,9 @@ const Header: NextPage = () => {
         <div className="header-navigation-info">
           {navShow && (
             <Link href="/mask">
-              <a className="header-navigation-font">공적마스크 정보</a>
+              <a className="header-navigation-font" onClick={toggleNavi}>
+                공적마스크 정보
+              </a>
             </Link>
           )}
         </div>
