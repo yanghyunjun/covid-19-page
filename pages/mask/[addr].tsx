@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { MaskType } from "../../types/mask";
 import fetch from "isomorphic-unfetch";
 import { useRouter } from "next/router";
-import MaskSearch from "../../components/MaskSearch";
 import MenuBar from "../../components/MenuBar";
 
 const Container = styled.div`
@@ -25,6 +24,22 @@ const Container = styled.div`
       font-size: 2em;
       padding: 30px 50px;
       border-bottom: 2px solid #ff9c0d;
+      @media (max-width: 1200px) {
+        font-size: 1.5em;
+        padding: 33px 58px;
+      }
+      @media (max-width: 768px) {
+        font-size: 1.2em;
+        font-weight: 600;
+      }
+      @media (max-width: 768px) {
+        font-size: 1.2em;
+        font-weight: 600;
+      }
+      @media (max-width: 415px) {
+        font-size: 1em;
+        font-weight: 600;
+      }
     }
   }
   .subTitle {
@@ -32,28 +47,59 @@ const Container = styled.div`
     color: #ff9c0d;
     font-size: 50px;
     padding: 70px 0px;
+    @media (max-width: 1200px) {
+      font-size: 2.5em;
+    }
+    @media (max-width: 768px) {
+      font-size: 2.2em;
+    }
+    @media (max-width: 768px) {
+      font-size: 2.2em;
+    }
+    @media (max-width: 415px) {
+      font-size: 2em;
+    }
   }
   p {
     color: gray;
   }
   .remain-state-green {
     color: #2cbf4e;
+    font-weight: 700;
   }
   .remain-state-blue {
     color: #2c67bf;
+    font-weight: 700;
   }
   .remain-state-purple {
     color: #b32cbf;
+    font-weight: 700;
   }
   .remain-state-brown {
     color: #bf892c;
+    font-weight: 700;
   }
   .remain-state-red {
     color: #bf2c40;
+    font-weight: 700;
   }
   .search-wrapper {
-    display: flex;
-    width: 500px;
+    /* display: flex;
+    width: 1000px;
+    overflow-x: auto; */
+    /* width: 1000px; */
+    position: relative;
+    .search-container {
+      width: 1000px;
+      .search-left {
+        float: left;
+        width: 500px;
+      }
+      .search-right {
+        float: right;
+        width: 500px;
+      }
+    }
   }
 `;
 
@@ -64,6 +110,17 @@ interface IProps {
 }
 
 const addr: NextPage<IProps> = ({ addr, maskData, title }) => {
+  if (maskData === undefined) {
+    return (
+      <Container>
+        <MenuBar title={title} />
+        <div className="title-wrapper">
+          <div className="title">공적 마스크판매 정보</div>
+        </div>
+        <div className="subTitle">주소가 잘못되었습니다.</div>
+      </Container>
+    );
+  }
   const searchCheack = () => {
     if (maskData.count === 0) {
       return false;
@@ -71,9 +128,6 @@ const addr: NextPage<IProps> = ({ addr, maskData, title }) => {
       return true;
     }
   };
-  if (maskData === undefined) {
-    return <div className="subTitle">주소가 잘못되었습니다.</div>;
-  }
   const remainState = (data) => {
     switch (data) {
       case "plenty":
@@ -86,6 +140,13 @@ const addr: NextPage<IProps> = ({ addr, maskData, title }) => {
         return <span className="remain-state-brown">1개이하</span>;
       default:
         return <span className="remain-state-red">재고없음</span>;
+    }
+  };
+  const indexState = (index) => {
+    if (index === 5) {
+      index < 5;
+    } else if (index === 10) {
+      index > 5 && index < 10;
     }
   };
   return (
@@ -104,12 +165,25 @@ const addr: NextPage<IProps> = ({ addr, maskData, title }) => {
       {searchCheack() && (
         <div className="search-wrapper">
           {maskData.stores.map((store, index) => (
-            <div key={index}>
-              <div>약국이름 {store.name}</div>
-              <div>약국주소 {store.addr}</div>
-              <div>재고상태 {remainState(store.remain_stat)}</div>
-              <div>입고시간 {store.stock_at}</div>
-              <div>데이터생성일자{store.created_at}</div>
+            <div className="search-container" key={index}>
+              {index === 1 && (
+                <div className="search-left">
+                  <div>약국이름 {store.name}</div>
+                  <div>약국주소 {store.addr}</div>
+                  <div>재고상태 {remainState(store.remain_stat)}</div>
+                  <div>입고시간 {store.stock_at}</div>
+                  <div>데이터생성일자{store.created_at}</div>
+                </div>
+              )}
+              {index >= 5 && index < 10 && (
+                <div className="search-right">
+                  <div>약국이름 {store.name}</div>
+                  <div>약국주소 {store.addr}</div>
+                  <div>재고상태 {remainState(store.remain_stat)}</div>
+                  <div>입고시간 {store.stock_at}</div>
+                  <div>데이터생성일자{store.created_at}</div>
+                </div>
+              )}
             </div>
           ))}
         </div>

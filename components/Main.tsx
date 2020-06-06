@@ -12,10 +12,12 @@ const Container = styled.div`
     padding-top: 80px;
     padding-bottom: 80px;
     h1 {
-      min-width: 714px;
       text-align: left;
       font-size: 40px;
       font-weight: 700;
+      @media (min-width: 714px) {
+        min-width: 714px;
+      }
     }
     h2 {
       text-align: left;

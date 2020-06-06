@@ -72,6 +72,9 @@ const Container = styled.div`
       @media (max-width: 597px) {
         flex-direction: column;
       }
+      @media (max-width: 321px) {
+        margin-left: 20px;
+      }
       .header-context {
         color: white;
         font-family: "Noto Sans KR";
@@ -133,6 +136,9 @@ const Container = styled.div`
         @media (max-width: 505px) {
           font-size: 2em;
         }
+        @media (max-width: 321px) {
+          font-size: 1.5em;
+        }
       }
       .header-navigation-wrapper {
         z-index: 20;
@@ -149,6 +155,9 @@ const Container = styled.div`
             width: 1em;
             height: 1em;
           }
+          @media (max-width: 321px) {
+            font-size: 1.5em;
+          }
         }
         .header-navigation-scroll {
           width: 3em;
@@ -163,6 +172,9 @@ const Container = styled.div`
             font-size: 2em;
             width: 1em;
             height: 1em;
+          }
+          @media (max-width: 321px) {
+            font-size: 1.5em;
           }
         }
       }
@@ -180,6 +192,9 @@ const Container = styled.div`
           font-size: 2em;
           width: 1em;
           height: 1em;
+        }
+        @media (max-width: 321px) {
+          font-size: 1.5em;
         }
       }
     }
