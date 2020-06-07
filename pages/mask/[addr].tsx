@@ -84,21 +84,11 @@ const Container = styled.div`
     font-weight: 700;
   }
   .search-wrapper {
-    /* display: flex;
     width: 1000px;
-    overflow-x: auto; */
-    /* width: 1000px; */
-    position: relative;
+    overflow-x: auto;
+    overflow-y: hidden;
     .search-container {
-      width: 1000px;
-      .search-left {
-        float: left;
-        width: 500px;
-      }
-      .search-right {
-        float: right;
-        width: 500px;
-      }
+      width: 500px;
     }
   }
 `;
@@ -142,13 +132,6 @@ const addr: NextPage<IProps> = ({ addr, maskData, title }) => {
         return <span className="remain-state-red">재고없음</span>;
     }
   };
-  const indexState = (index) => {
-    if (index === 5) {
-      index < 5;
-    } else if (index === 10) {
-      index > 5 && index < 10;
-    }
-  };
   return (
     <Container>
       <MenuBar title={title} />
@@ -166,24 +149,11 @@ const addr: NextPage<IProps> = ({ addr, maskData, title }) => {
         <div className="search-wrapper">
           {maskData.stores.map((store, index) => (
             <div className="search-container" key={index}>
-              {index === 1 && (
-                <div className="search-left">
-                  <div>약국이름 {store.name}</div>
-                  <div>약국주소 {store.addr}</div>
-                  <div>재고상태 {remainState(store.remain_stat)}</div>
-                  <div>입고시간 {store.stock_at}</div>
-                  <div>데이터생성일자{store.created_at}</div>
-                </div>
-              )}
-              {index >= 5 && index < 10 && (
-                <div className="search-right">
-                  <div>약국이름 {store.name}</div>
-                  <div>약국주소 {store.addr}</div>
-                  <div>재고상태 {remainState(store.remain_stat)}</div>
-                  <div>입고시간 {store.stock_at}</div>
-                  <div>데이터생성일자{store.created_at}</div>
-                </div>
-              )}
+              <div>약국이름 {store.name}</div>
+              <div>약국주소 {store.addr}</div>
+              <div>재고상태 {remainState(store.remain_stat)}</div>
+              <div>입고시간 {store.stock_at}</div>
+              <div>데이터생성일자{store.created_at}</div>
             </div>
           ))}
         </div>
