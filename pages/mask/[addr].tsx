@@ -3,8 +3,10 @@ import { NextPage } from "next";
 import styled from "styled-components";
 import { MaskType } from "../../types/mask";
 import fetch from "isomorphic-unfetch";
-import { useRouter } from "next/router";
 import MenuBar from "../../components/MenuBar";
+import { PageCount } from "../../data";
+import { useRouter } from "next/router";
+import Link from "next/link";
 
 const Container = styled.div`
   @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
@@ -60,6 +62,13 @@ const Container = styled.div`
       font-size: 2em;
     }
   }
+  .research {
+    font-family: "Nanum Pen Script";
+    color: #ff9c0d;
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 20px;
+  }
   p {
     color: gray;
   }
@@ -84,17 +93,27 @@ const Container = styled.div`
     font-weight: 700;
   }
   .search-wrapper {
-    width: 1000px;
-    /* overflow-x: auto;
-    overflow-y: hidden;
-    position: relative; */
-    .search-row1 {
-      width: 50%;
-      float: left;
+    .search {
+      margin: 10px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      border-radius: 5px;
+      background-color: #fffdfa;
+      border: 1px solid #ff9c0d;
     }
-    .search-row2 {
-      width: 50%;
-      float: right;
+  }
+  .page-wraaper {
+    display: flex;
+    margin-bottom: 20px;
+    .page {
+      cursor: pointer;
+      margin-right: 10px;
+    }
+    .pageBold {
+      cursor: pointer;
+      font-weight: 700;
+      margin-right: 10px;
     }
   }
 `;
@@ -106,6 +125,7 @@ interface IProps {
 }
 
 const addr: NextPage<IProps> = ({ addr, maskData, title }) => {
+  const router = useRouter();
   if (maskData === undefined) {
     return (
       <Container>
@@ -114,6 +134,13 @@ const addr: NextPage<IProps> = ({ addr, maskData, title }) => {
           <div className="title">공적 마스크판매 정보</div>
         </div>
         <div className="subTitle">주소가 잘못되었습니다.</div>
+        <div
+          className="research"
+          role="button"
+          onClick={() => router.push("/mask")}
+        >
+          다시검색
+        </div>
       </Container>
     );
   }
@@ -138,6 +165,32 @@ const addr: NextPage<IProps> = ({ addr, maskData, title }) => {
         return <span className="remain-state-red">재고없음</span>;
     }
   };
+  const [prePageIndex, setPrePageIndex] = useState(0);
+  const [pageIndex, setPageIndex] = useState(10);
+  const pageHandler = () => {
+    return (
+      <div className="page-wraaper">
+        {PageCount.map(
+          (pagedata, index) =>
+            index < maskData.count / 10 && (
+              <div
+                key={index}
+                role="button"
+                className={
+                  prePageIndex === pagedata.prepage ? "pageBold" : "page"
+                }
+                onClick={() => {
+                  setPrePageIndex(pagedata.prepage),
+                    setPageIndex(pagedata.currentpage);
+                }}
+              >
+                {pagedata.index}
+              </div>
+            )
+        )}
+      </div>
+    );
+  };
   return (
     <Container>
       <MenuBar title={title} />
@@ -151,38 +204,31 @@ const addr: NextPage<IProps> = ({ addr, maskData, title }) => {
       <p>{addr} 에 대한 검색 정보</p>
       <p>검색된 주소 : {maskData?.address}</p>
       {searchCheack() && <p>검색된 약국 갯수 : {maskData.count}</p>}
+      <div
+        className="research"
+        role="button"
+        onClick={() => router.push("/mask")}
+      >
+        다시검색
+      </div>
       {searchCheack() && (
         <div className="search-wrapper">
-          <div className="search-row1">
-            {maskData.stores.map(
-              (store, index) =>
-                index % 2 === 0 && (
-                  <div key={index}>
-                    <div>약국이름 {store.name}</div>
-                    <div>약국주소 {store.addr}</div>
-                    <div>재고상태 {remainState(store.remain_stat)}</div>
-                    <div>입고시간 {store.stock_at}</div>
-                    <div>데이터생성일자{store.created_at}</div>
-                  </div>
-                )
-            )}
-          </div>
-          <div className="search-row2">
-            {maskData.stores.map(
-              (store, index) =>
-                index % 2 === 1 && (
-                  <div key={index}>
-                    <div>약국이름 {store.name}</div>
-                    <div>약국주소 {store.addr}</div>
-                    <div>재고상태 {remainState(store.remain_stat)}</div>
-                    <div>입고시간 {store.stock_at}</div>
-                    <div>데이터생성일자{store.created_at}</div>
-                  </div>
-                )
-            )}
-          </div>
+          {maskData.stores.map(
+            (store, index) =>
+              prePageIndex <= index &&
+              index < pageIndex && (
+                <div key={index} className="search">
+                  <div>약국이름 {store.name}</div>
+                  <div>약국주소 {store.addr}</div>
+                  <div>재고상태 {remainState(store.remain_stat)}</div>
+                  <div>입고시간 {store.stock_at}</div>
+                  <div>데이터생성일자 {store.created_at}</div>
+                </div>
+              )
+          )}
         </div>
       )}
+      {pageHandler()}
     </Container>
   );
 };

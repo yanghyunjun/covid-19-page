@@ -102,6 +102,16 @@ const Container = styled.div`
     margin-top: 20px;
     color: gray;
   }
+  .warning-message {
+    font-size: 1.2em;
+    @media (max-width: 767px) {
+      font-size: 0.7em;
+    }
+    @media (max-width: 414px) {
+      font-size: 0.5em;
+    }
+    color: gray;
+  }
 `;
 
 interface IProps {
@@ -148,6 +158,9 @@ const index: NextPage<IProps> = ({ title }) => {
             alt="검색"
           />
         </div>
+      </div>
+      <div className="warning-message">
+        ※검색이 제대로 되지 않을시 주소를 상세하게 적어주세요※
       </div>
       <p>{address} 지역 마스크 판매 정보 검색</p>
     </Container>
