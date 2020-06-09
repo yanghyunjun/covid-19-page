@@ -85,10 +85,16 @@ const Container = styled.div`
   }
   .search-wrapper {
     width: 1000px;
-    overflow-x: auto;
+    /* overflow-x: auto;
     overflow-y: hidden;
-    .search-container {
-      width: 500px;
+    position: relative; */
+    .search-row1 {
+      width: 50%;
+      float: left;
+    }
+    .search-row2 {
+      width: 50%;
+      float: right;
     }
   }
 `;
@@ -147,15 +153,34 @@ const addr: NextPage<IProps> = ({ addr, maskData, title }) => {
       {searchCheack() && <p>검색된 약국 갯수 : {maskData.count}</p>}
       {searchCheack() && (
         <div className="search-wrapper">
-          {maskData.stores.map((store, index) => (
-            <div className="search-container" key={index}>
-              <div>약국이름 {store.name}</div>
-              <div>약국주소 {store.addr}</div>
-              <div>재고상태 {remainState(store.remain_stat)}</div>
-              <div>입고시간 {store.stock_at}</div>
-              <div>데이터생성일자{store.created_at}</div>
-            </div>
-          ))}
+          <div className="search-row1">
+            {maskData.stores.map(
+              (store, index) =>
+                index % 2 === 0 && (
+                  <div key={index}>
+                    <div>약국이름 {store.name}</div>
+                    <div>약국주소 {store.addr}</div>
+                    <div>재고상태 {remainState(store.remain_stat)}</div>
+                    <div>입고시간 {store.stock_at}</div>
+                    <div>데이터생성일자{store.created_at}</div>
+                  </div>
+                )
+            )}
+          </div>
+          <div className="search-row2">
+            {maskData.stores.map(
+              (store, index) =>
+                index % 2 === 1 && (
+                  <div key={index}>
+                    <div>약국이름 {store.name}</div>
+                    <div>약국주소 {store.addr}</div>
+                    <div>재고상태 {remainState(store.remain_stat)}</div>
+                    <div>입고시간 {store.stock_at}</div>
+                    <div>데이터생성일자{store.created_at}</div>
+                  </div>
+                )
+            )}
+          </div>
         </div>
       )}
     </Container>
