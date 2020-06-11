@@ -1,30 +1,68 @@
 import React from "react";
 import styled from "styled-components";
 import { NextPage } from "next";
-import fetch from "isomorphic-unfetch";
-import { CoronaKR } from "../../types/coronaKr";
+import MenuBar from "../../components/MenuBar";
 
-const Container = styled.div``;
+const Container = styled.div`
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  .title-wrapper {
+    min-width: 80%;
+    min-height: 83px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid #ccc;
+    .title {
+      color: #222;
+      font-size: 2em;
+      padding: 30px 50px;
+      border-bottom: 2px solid #ff9c0d;
+      @media (max-width: 1200px) {
+        font-size: 1.5em;
+        padding: 33px 58px;
+      }
+      @media (max-width: 768px) {
+        font-size: 1.2em;
+        font-weight: 600;
+      }
+      @media (max-width: 768px) {
+        font-size: 1.2em;
+        font-weight: 600;
+      }
+      @media (max-width: 415px) {
+        font-size: 1em;
+        font-weight: 600;
+      }
+    }
+  }
+`;
 
-interface IProp {
-  coronaKrData?: CoronaKR;
+interface IProps {
+  title: string | string[];
 }
 
-const index: NextPage<IProp> = ({ coronaKrData }) => {
-  return <Container>한국현황</Container>;
+const index: NextPage<IProps> = ({ title }) => {
+  return (
+    <Container>
+      <MenuBar title={title} />
+      <div className="title-wrapper">
+        <div className="title">한국 현황</div>
+      </div>
+    </Container>
+  );
 };
 
-// index.getInitialProps = async () => {
-//   try {
-//     const coronaKrDataRes = await fetch(
-//       `http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19InfStateJson?serviceKey=e%2Fu5HiiZcpglw2q8nndKG60KcqEAnOaOLYiLGQJZa4klvndij7SlvvQAxvRLifAESwNq5IKZH4lVjeSd5uS%2FWQ%3D%3D`
-//     );
-//     const coronaKrData = await coronaKrDataRes.json();
-//     return { coronaKrData };
-//   } catch (e) {
-//     console.log(e.message);
-//     return {};
-//   }
-// };
+index.getInitialProps = async ({ pathname }) => {
+  try {
+    const title = pathname.split("/")[1];
+    return { title };
+  } catch (e) {
+    console.log(e.message);
+    return { title: "" };
+  }
+};
 
 export default index;

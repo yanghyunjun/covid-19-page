@@ -167,7 +167,7 @@ const index: NextPage<IProps> = ({ title }) => {
   );
 };
 
-index.getInitialProps = async ({ pathname }) => {
+index.getInitialProps = ({ pathname }) => {
   try {
     const title = pathname.split("/")[1];
     return { title };

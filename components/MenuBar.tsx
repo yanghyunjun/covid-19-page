@@ -62,14 +62,10 @@ const MenuBar: NextPage<IProp> = ({ title }) => {
               : "button-wrapper"
           }`}
           key={index}
+          role="button"
+          onClick={() => router.push(data.href)}
         >
-          <div
-            className="button-context"
-            role="button"
-            onClick={() => router.push(data.href)}
-          >
-            {data.a}
-          </div>
+          <div className="button-context">{data.a}</div>
         </div>
       ))}
     </Container>
