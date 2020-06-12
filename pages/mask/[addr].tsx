@@ -6,7 +6,6 @@ import fetch from "isomorphic-unfetch";
 import MenuBar from "../../components/MenuBar";
 import { PageCount } from "../../data";
 import { useRouter } from "next/router";
-import Link from "next/link";
 
 const Container = styled.div`
   @import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
