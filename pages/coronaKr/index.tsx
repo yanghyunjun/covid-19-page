@@ -108,7 +108,8 @@ interface IProps {
 
 const index: NextPage<IProps> = ({ title, covid19KrData }) => {
   const [showSeoul, setShowSeoul] = useState(false);
-  const items = covid19KrData.response.body.items;
+  const items = covid19KrData;
+  console.log(items);
   return (
     <Container>
       <MenuBar title={title} />
@@ -134,7 +135,7 @@ const index: NextPage<IProps> = ({ title, covid19KrData }) => {
           >
             {showSeoul && (
               <div className="korea-map-seoul-info-wrapper">
-                {items.item.map(
+                {/* {items.item.map(
                   (data, index) =>
                     index === 17 && (
                       <div key={index}>
@@ -152,7 +153,7 @@ const index: NextPage<IProps> = ({ title, covid19KrData }) => {
                         <div>격리 해제 수: {data.isolClearCnt}</div>
                       </div>
                     )
-                )}
+                )} */}
               </div>
             )}
           </OutsideClickHandler>
@@ -169,8 +170,10 @@ index.getInitialProps = async ({ pathname }) => {
     // let year = date.getFullYear();
     // let month = date.getMonth() + 1;
     // let day = date.getDate();
+    const servicekey =
+      "BgwP4pyTado5recbSerXHA93SWAy%2B1AExNGuxbCIHpP4xIhxz%2BJTkNiXkY36oYhzG1L9C6G976iuiX6yPM1oZw%3D%3D";
     const covid19SideStateRes = await fetch(
-      `http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=BgwP4pyTado5recbSerXHA93SWAy%2B1AExNGuxbCIHpP4xIhxz%2BJTkNiXkY36oYhzG1L9C6G976iuiX6yPM1oZw%3D%3D&_type=json`
+      `http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}&_type=json`
     );
     const covid19KrData = await covid19SideStateRes.json();
     return { title, covid19KrData };

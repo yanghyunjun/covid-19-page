@@ -1,13 +1,14 @@
-const webpack = require("webpack");
-
 module.exports = {
-  webpack: (config, { dev }) => {
-    config.plugins.push(
-      new webpack.ProvidePlugin({
-        $: "jquery",
-        jQuery: "jquery",
-      })
-    );
+  webpack: (config, { isServer }) => {
+    // Fixes npm packages that depend on `fs` module
+    if (!isServer) {
+      config.node = {
+        fs: "empty",
+        net: "empty",
+        tls: "empty",
+      };
+    }
+
     return config;
   },
 };
