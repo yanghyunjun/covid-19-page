@@ -108,8 +108,11 @@ interface IProps {
 
 const index: NextPage<IProps> = ({ title, covid19KrData }) => {
   const [showSeoul, setShowSeoul] = useState(false);
-  const items = covid19KrData;
-  console.log(items);
+  // if (covid19KrData === undefined) {
+  //   location.reload();
+  // }
+  console.log(covid19KrData);
+  // const items = covid19KrData.response.body.items;
   return (
     <Container>
       <MenuBar title={title} />
@@ -173,7 +176,8 @@ index.getInitialProps = async ({ pathname }) => {
     const servicekey =
       "BgwP4pyTado5recbSerXHA93SWAy%2B1AExNGuxbCIHpP4xIhxz%2BJTkNiXkY36oYhzG1L9C6G976iuiX6yPM1oZw%3D%3D";
     const covid19SideStateRes = await fetch(
-      `http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}&_type=json`
+      `http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}&_type=json`,
+      { mode: "no-cors", headers: { "Access-Control-Allow-Origin": "*" } }
     );
     const covid19KrData = await covid19SideStateRes.json();
     return { title, covid19KrData };
