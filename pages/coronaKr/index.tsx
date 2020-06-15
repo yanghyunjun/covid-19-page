@@ -173,13 +173,19 @@ index.getInitialProps = async ({ pathname }) => {
     // let year = date.getFullYear();
     // let month = date.getMonth() + 1;
     // let day = date.getDate();
+
     const servicekey =
       "BgwP4pyTado5recbSerXHA93SWAy%2B1AExNGuxbCIHpP4xIhxz%2BJTkNiXkY36oYhzG1L9C6G976iuiX6yPM1oZw%3D%3D";
     const covid19SideStateRes = await fetch(
-      `http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}&_type=json`,
-      { mode: "no-cors", headers: { "Access-Control-Allow-Origin": "*" } }
+      `http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}`,
+      {
+        method: "GET",
+        mode: "no-cors",
+        headers: { "Content-Type": "application/json" },
+      }
     );
-    const covid19KrData = await covid19SideStateRes.json();
+    const covid19KrRes = await covid19SideStateRes.json();
+    const covid19KrData = JSON.parse(covid19KrRes);
     return { title, covid19KrData };
   } catch (e) {
     console.log(e.message);
