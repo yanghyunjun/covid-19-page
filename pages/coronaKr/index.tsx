@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { NextPage } from "next";
 import fetch from "isomorphic-unfetch";
 import MenuBar from "../../components/MenuBar";
-import OutsideClickHandler from "react-outside-click-handler";
 import { CoronaSideKR } from "../../types/coronaKr";
 
 const Container = styled.div`
@@ -57,46 +56,14 @@ const Container = styled.div`
         width: 300px;
       }
     }
-    .korea-map-seoul-wrapper {
+    .korea-button-card {
       position: absolute;
-    }
-    .korea-map-seoul {
       z-index: 11;
-      top: 18%;
+      top: 17%;
       left: 27%;
       font-weight: 700;
       cursor: pointer;
       padding: 1% 3% 1% 1%;
-    }
-    .korea-map-seoul-info-wrapper {
-      top: 20%;
-      left: 28%;
-      z-index: 13;
-      background-color: white;
-      border-radius: 10px;
-      padding: 10px;
-      min-width: 180px;
-    }
-    .city-name {
-      font-weight: 600;
-      color: #000;
-      font-size: 1.3em;
-    }
-    .info-wrapper {
-      display: flex;
-      justify-content: space-between;
-      .info-title {
-        color: #8f8f8f;
-        font-weight: 600;
-        font-size: 1em;
-        font-family: "Dotum";
-      }
-      .info-data {
-        font-family: "Malgun Gothic";
-        font-weight: 600;
-        color: #000;
-        font-size: 1em;
-      }
     }
   }
 `;
@@ -108,11 +75,13 @@ interface IProps {
 
 const index: NextPage<IProps> = ({ title, covid19KrData }) => {
   const [showSeoul, setShowSeoul] = useState(false);
-  // if (covid19KrData === undefined) {
-  //   location.reload();
-  // }
-  console.log(covid19KrData);
-  // const items = covid19KrData.response.body.items;
+  if (covid19KrData === undefined) {
+    location.reload();
+  }
+  // const items = () => {
+  //   return covid19KrData.response.body.items;
+  // };
+  const items = covid19KrData.response.body.items;
   return (
     <Container>
       <MenuBar title={title} />
@@ -121,45 +90,18 @@ const index: NextPage<IProps> = ({ title, covid19KrData }) => {
       </div>
       <div className="korea-map-wrapper">
         <img className="korea-map" src="/static/image/korea_map.png" />
-        <div className="korea-map-seoul-wrapper">
-          <div
-            role="button"
-            className="korea-map-seoul"
-            onClick={() => setShowSeoul(!showSeoul)}
-          >
-            서울
-          </div>
-          <OutsideClickHandler
-            onOutsideClick={() => {
-              if (showSeoul) {
-                setShowSeoul(false);
-              }
-            }}
-          >
-            {showSeoul && (
-              <div className="korea-map-seoul-info-wrapper">
-                {/* {items.item.map(
-                  (data, index) =>
-                    index === 17 && (
-                      <div key={index}>
-                        <div className="city-name">
-                          {data.gubun}({data.gubunCn},{data.gubunEn})
-                        </div>
-                        <div className="info-wrapper">
-                          <div className="info-title">누적 확진환자</div>
-                          <div>
-                            <span className="info-data">{data.defCnt}</span>
-                            <span className="info-title">명</span>
-                          </div>
-                        </div>
-                        <div>격리중인 환자 수: {data.isolIngCnt}</div>
-                        <div>격리 해제 수: {data.isolClearCnt}</div>
-                      </div>
-                    )
-                )} */}
-              </div>
-            )}
-          </OutsideClickHandler>
+        <div
+          role="button"
+          className="korea-button-card"
+          onClick={() => setShowSeoul(!showSeoul)}
+        >
+          {setTimeout(() => {
+            {
+              items.item.map((data, index) => {
+                <div key={index}>data</div>;
+              });
+            }
+          }, 500)}
         </div>
       </div>
     </Container>
@@ -169,27 +111,21 @@ const index: NextPage<IProps> = ({ title, covid19KrData }) => {
 index.getInitialProps = async ({ pathname }) => {
   try {
     const title = pathname.split("/")[1];
+
+    const servicekey =
+      "BgwP4pyTado5recbSerXHA93SWAy%2B1AExNGuxbCIHpP4xIhxz%2BJTkNiXkY36oYhzG1L9C6G976iuiX6yPM1oZw%3D%3D";
+    const requestURL = `http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}&_type=json`;
+    const covid19SideStateRes = await fetch(`${requestURL}`);
+    const covid19KrData = await covid19SideStateRes.json();
+    return { title, covid19KrData };
+
     // let date = new Date();
     // let year = date.getFullYear();
     // let month = date.getMonth() + 1;
     // let day = date.getDate();
-
-    const servicekey =
-      "BgwP4pyTado5recbSerXHA93SWAy%2B1AExNGuxbCIHpP4xIhxz%2BJTkNiXkY36oYhzG1L9C6G976iuiX6yPM1oZw%3D%3D";
-    const covid19SideStateRes = await fetch(
-      `http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}`,
-      {
-        method: "GET",
-        mode: "no-cors",
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    const covid19KrRes = await covid19SideStateRes.json();
-    const covid19KrData = JSON.parse(covid19KrRes);
-    return { title, covid19KrData };
   } catch (e) {
     console.log(e.message);
-    return { title: "" };
+    return { title: "", covid19KrData: undefined };
   }
 };
 
