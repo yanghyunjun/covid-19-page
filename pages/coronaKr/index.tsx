@@ -75,12 +75,6 @@ interface IProps {
 
 const index: NextPage<IProps> = ({ title, covid19KrData }) => {
   const [showSeoul, setShowSeoul] = useState(false);
-  if (covid19KrData === undefined) {
-    location.reload();
-  }
-  // const items = () => {
-  //   return covid19KrData.response.body.items;
-  // };
   const items = covid19KrData.response.body.items;
   return (
     <Container>
@@ -95,13 +89,20 @@ const index: NextPage<IProps> = ({ title, covid19KrData }) => {
           className="korea-button-card"
           onClick={() => setShowSeoul(!showSeoul)}
         >
-          {setTimeout(() => {
-            {
-              items.item.map((data, index) => {
-                <div key={index}>data</div>;
-              });
-            }
-          }, 500)}
+          {items.item.map(
+            (data, index) =>
+              index === 17 && (
+                <div>
+                  <div>{data.gubun}</div>
+                  <div>{data.defCnt}</div>
+                  <div>
+                    {data.incDec === 0
+                      ? `(${data.incDec})`
+                      : `(+${data.incDec})`}
+                  </div>
+                </div>
+              )
+          )}
         </div>
       </div>
     </Container>
@@ -111,11 +112,15 @@ const index: NextPage<IProps> = ({ title, covid19KrData }) => {
 index.getInitialProps = async ({ pathname }) => {
   try {
     const title = pathname.split("/")[1];
-
+    const proxy = "http://cors-anywhere.herokuapp.com/";
     const servicekey =
       "BgwP4pyTado5recbSerXHA93SWAy%2B1AExNGuxbCIHpP4xIhxz%2BJTkNiXkY36oYhzG1L9C6G976iuiX6yPM1oZw%3D%3D";
-    const requestURL = `http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}&_type=json`;
-    const covid19SideStateRes = await fetch(`${requestURL}`);
+    const requestURL = `${proxy}http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}&_type=json`;
+    const covid19SideStateRes = await fetch(`${requestURL}`, {
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+      },
+    });
     const covid19KrData = await covid19SideStateRes.json();
     return { title, covid19KrData };
 
