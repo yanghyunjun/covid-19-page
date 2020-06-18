@@ -36,34 +36,33 @@ const Container = styled.div`
       }
     }
   }
-  .korea-map-wrapper {
-    position: relative;
-    .korea-map {
-      width: 800px;
-      @media (max-width: 1200px) {
-        width: 800px;
+  .coronakr-contents-wrapper {
+    display: flex;
+    .korea-map-wrapper {
+      position: relative;
+      width: 50%;
+      .korea-map {
+        width: 100%;
       }
-      @media (max-width: 801px) {
-        width: 650px;
-      }
-      @media (max-width: 651px) {
-        width: 500px;
-      }
-      @media (max-width: 501px) {
-        width: 414px;
-      }
-      @media (max-width: 415px) {
-        width: 300px;
+      .korea-button-card {
+        position: absolute;
+        z-index: 11;
+        top: 17%;
+        left: 27%;
+        cursor: pointer;
+        padding: 4px 8px;
+        box-shadow: 2px 2px 4px rgba(100, 100, 100, 0.2);
+        border-radius: 2px;
+        text-align: center;
+        background-color: #fff;
       }
     }
-    .korea-button-card {
-      position: absolute;
-      z-index: 11;
-      top: 17%;
-      left: 27%;
-      font-weight: 700;
-      cursor: pointer;
-      padding: 1% 3% 1% 1%;
+    .coronaKR-data-wrapper {
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      .coronaKR-data-detail {
+      }
     }
   }
 `;
@@ -75,34 +74,52 @@ interface IProps {
 
 const index: NextPage<IProps> = ({ title, covid19KrData }) => {
   const [showSeoul, setShowSeoul] = useState(false);
-  const items = covid19KrData.response.body.items;
+  const [showTotal, setShowTotal] = useState(true);
+  const data = covid19KrData.response.body.items;
+  console.log(data);
   return (
     <Container>
       <MenuBar title={title} />
       <div className="title-wrapper">
         <div className="title">한국 현황</div>
       </div>
-      <div className="korea-map-wrapper">
-        <img className="korea-map" src="/static/image/korea_map.png" />
-        <div
-          role="button"
-          className="korea-button-card"
-          onClick={() => setShowSeoul(!showSeoul)}
-        >
-          {items.item.map(
-            (data, index) =>
-              index === 17 && (
-                <div>
-                  <div>{data.gubun}</div>
-                  <div>{data.defCnt}</div>
-                  <div>
-                    {data.incDec === 0
-                      ? `(${data.incDec})`
-                      : `(+${data.incDec})`}
+      <div className="coronakr-contents-wrapper">
+        <div className="korea-map-wrapper">
+          <img className="korea-map" src="/static/image/korea_map.png" />
+          <div
+            role="button"
+            className="korea-button-card"
+            onClick={() => {
+              setShowSeoul(!showSeoul), setShowTotal(!showTotal);
+            }}
+          >
+            {/* {data.item.map(
+              (data, index) =>
+                index === 17 && (
+                  <div key={index}>
+                    <div>{data.gubun}</div>
+                    <div>{data.defCnt}</div>
+                    <div>
+                      {data.incDec === 0
+                        ? `(${data.incDec})`
+                        : `(+${data.incDec})`}
+                    </div>
                   </div>
-                </div>
-              )
-          )}
+                )
+            )} */}
+          </div>
+        </div>
+        <div className="coronaKR-data-wrapper">
+          {/* {showTotal &&
+            data.item.map(
+              (data, index) =>
+                index === 18 && (
+                  <div key={index} className="coronaKR-data-detail">
+                    <div>전국</div>
+                    <div></div>
+                  </div>
+                )
+            )} */}
         </div>
       </div>
     </Container>
@@ -117,17 +134,17 @@ index.getInitialProps = async ({ pathname }) => {
       "BgwP4pyTado5recbSerXHA93SWAy%2B1AExNGuxbCIHpP4xIhxz%2BJTkNiXkY36oYhzG1L9C6G976iuiX6yPM1oZw%3D%3D";
     const requestURL = `${proxy}http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}&_type=json`;
     const covid19SideStateRes = await fetch(`${requestURL}`, {
+      // headers: {
+      //   "x-requested-with": "xhr",
+      // },
+      // redirect: "follow",
       headers: {
-        "Access-Control-Allow-Origin": "*",
+        // "Content-Type": "application/json",
+        Accept: "*/*",
       },
     });
     const covid19KrData = await covid19SideStateRes.json();
     return { title, covid19KrData };
-
-    // let date = new Date();
-    // let year = date.getFullYear();
-    // let month = date.getMonth() + 1;
-    // let day = date.getDate();
   } catch (e) {
     console.log(e.message);
     return { title: "", covid19KrData: undefined };
