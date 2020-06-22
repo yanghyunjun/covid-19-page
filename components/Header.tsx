@@ -124,12 +124,11 @@ const Container = styled.div`
     .header-title-wrapper {
       display: flex;
       justify-content: space-around;
-
       .header-title {
         margin-left: -40px;
         margin-top: 5px;
         font-size: 3em;
-        color: white;
+        color: #fff;
         font-weight: 600;
         font-family: "Nanum Pen Script";
         cursor: pointer;
@@ -138,6 +137,10 @@ const Container = styled.div`
         }
         @media (max-width: 321px) {
           font-size: 1.5em;
+        }
+        .header-logo {
+          width: 40px;
+          margin-right: 10px;
         }
       }
       .header-navigation-wrapper {
@@ -271,7 +274,14 @@ const Header: NextPage = () => {
             className="header-title"
             onClick={() => router.push("/")}
           >
-            🦝코로나 관련 정보
+            <span>
+              <img
+                className="header-logo"
+                src="/static/svg/virus.svg"
+                alt="home"
+              />
+            </span>
+            <span>코로나 관련 정보</span>
           </div>
           <div className="header-navigation-wrapper">
             <Nav
