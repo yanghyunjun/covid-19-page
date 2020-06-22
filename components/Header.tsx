@@ -141,6 +141,12 @@ const Container = styled.div`
         .header-logo {
           width: 40px;
           margin-right: 10px;
+          @media (max-width: 505px) {
+            width: 25px;
+          }
+          @media (max-width: 321px) {
+            width: 18px;
+          }
         }
       }
       .header-navigation-wrapper {
