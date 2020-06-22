@@ -18,6 +18,13 @@ class MyDocument extends Document {
           <meta property="og:image" content={UserData.Img} />
           <meta property="og:title" content={UserData?.title} />
           <meta property="og:description" content={UserData?.descript} />
+
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="192x192"
+            href="/static/image/ogImage.png"
+          />
         </Head>
         <body>
           <Main />
