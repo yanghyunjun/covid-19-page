@@ -18,7 +18,6 @@ class MyDocument extends Document {
           <meta property="og:image" content={UserData.Img} />
           <meta property="og:title" content={UserData?.title} />
           <meta property="og:description" content={UserData?.descript} />
-          <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
           <Main />
