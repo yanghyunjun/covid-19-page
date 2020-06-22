@@ -1,3 +1,11 @@
+export const UserData = {
+  name: "양현준",
+  englishName: "Hyunjun Yang",
+  Img: "../public/static/image/ogImage.png",
+  title: "covid19Info_hyunjun",
+  descript: "한국의 코로나정보를 모아보는 홈페이지 입니다.",
+};
+
 export const mainData = [
   {
     titleEng: "Corona Status in Korea",
