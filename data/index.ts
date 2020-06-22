@@ -1,8 +1,8 @@
 export const UserData = {
   name: "양현준",
   englishName: "Hyunjun Yang",
-  Img: "../public/static/image/ogImage.png",
-  title: "covid19Info_hyunjun",
+  Img: "blob:https://vercel.com/46ebf9df-0964-4ba4-abd0-c1740f9e2400",
+  title: "covid-19-Info_hyunjun",
   descript: "한국의 코로나정보를 모아보는 홈페이지 입니다.",
 };
 
