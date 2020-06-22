@@ -45,12 +45,16 @@ const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     margin-top: 5%;
+    align-items: center;
+    justify-content: center;
+    padding: 0px 0px;
     .data-button {
       border-radius: 5px;
       background-color: #fffdfa;
       border: 1px solid #ff9c0d;
       cursor: pointer;
       margin-right: 18px;
+      margin-bottom: 10px;
     }
     .data-button_onClick {
       border-radius: 5px;
@@ -59,6 +63,7 @@ const Container = styled.div`
       cursor: pointer;
       color: #fff;
       margin-right: 18px;
+      margin-bottom: 10px;
     }
   }
   .detail-data-wrapper {
