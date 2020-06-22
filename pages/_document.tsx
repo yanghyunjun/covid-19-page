@@ -23,7 +23,7 @@ class MyDocument extends Document {
             rel="icon"
             type="image/png"
             sizes="192x192"
-            href="/static/image/ogImage.png"
+            href="/static/image/virus.png"
           />
         </Head>
         <body>
