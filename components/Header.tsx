@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { NextPage } from "next";
 import Nav from "../public/static/svg/navigation.svg";
@@ -213,16 +213,21 @@ const Container = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    flex-direction: column;
     visibility: visible;
     opacity: 1;
     transition: opacity 0.5s linear;
     .header-navigation-info {
       z-index: 11;
+      .header-navigation-font-wrapper {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+      }
       .header-navigation-font {
         color: white;
         font-size: 3em;
         text-decoration: none;
+        margin-bottom: 30px;
         @media (max-width: 505px) {
           font-size: 2em;
         }
@@ -300,11 +305,28 @@ const Header: NextPage = () => {
       >
         <div className="header-navigation-info">
           {navShow && (
-            <Link href="/mask">
-              <a className="header-navigation-font" onClick={toggleNavi}>
-                공적마스크 정보
-              </a>
-            </Link>
+            <div className="header-navigation-font-wrapper">
+              <Link href="/">
+                <a className="header-navigation-font" onClick={toggleNavi}>
+                  홈
+                </a>
+              </Link>
+              <Link href="/coronaKr">
+                <a className="header-navigation-font" onClick={toggleNavi}>
+                  한국 현황
+                </a>
+              </Link>
+              <Link href="/coronaWr">
+                <a className="header-navigation-font" onClick={toggleNavi}>
+                  세계 현황
+                </a>
+              </Link>
+              <Link href="/mask">
+                <a className="header-navigation-font" onClick={toggleNavi}>
+                  공적마스크 정보
+                </a>
+              </Link>
+            </div>
           )}
         </div>
       </div>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { NextPage } from "next";
 import fetch from "isomorphic-unfetch";
+import { NextPage } from "next";
 import MenuBar from "../../components/MenuBar";
 import { CoronaSideKR } from "../../types/coronaKr";
 
@@ -882,16 +882,13 @@ const index: NextPage<IProps> = ({ title, covid19KrData }) => {
 
 index.getInitialProps = async ({ pathname }) => {
   try {
-    const title = pathname.split("/")[1];
-    const corsProxy = "https://yacdn.org/proxy";
-    const servicekey =
-      "BgwP4pyTado5recbSerXHA93SWAy%2B1AExNGuxbCIHpP4xIhxz%2BJTkNiXkY36oYhzG1L9C6G976iuiX6yPM1oZw%3D%3D";
-    const requestURL = `${corsProxy}/http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}&_type=json`;
-    const covid19SideStateRes = await fetch(`${requestURL}`);
-    const covid19KrData = await covid19SideStateRes.json();
-
-    const data = covid19KrData.response.body.items;
-    if (data === "") {
+    let date = new Date();
+    let hour = date.getHours();
+    if (hour < 9) {
+      const title = pathname.split("/")[1];
+      const corsProxy = "https://cors-anywhere.herokuapp.com";
+      const servicekey =
+        "BgwP4pyTado5recbSerXHA93SWAy%2B1AExNGuxbCIHpP4xIhxz%2BJTkNiXkY36oYhzG1L9C6G976iuiX6yPM1oZw%3D%3D";
       let today = new Date();
       today.setDate(today.getDate() - 1);
       let year = today.getFullYear();
@@ -901,12 +898,24 @@ index.getInitialProps = async ({ pathname }) => {
           : today.getMonth() + 1;
       let day = today.getDate() < 10 ? `0${today.getDate()}` : today.getDate();
       let yesterday = `${year}${month}${day}`;
-      let requestURL2 = `${corsProxy}/http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}&startCreateDt=${yesterday}&_type=json`;
-      const covid19SideStateRes2 = await fetch(`${requestURL2}`);
-      const covid19KrData_yesterday = await covid19SideStateRes2.json();
+      let requestURL = `${corsProxy}/http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey}&startCreateDt=${yesterday}&_type=json`;
+      const covid19SideStateRes = await fetch(`${requestURL}`, {
+        headers: { Origin: "openapi.data.go.kr" },
+      });
+      const covid19KrData_yesterday = await covid19SideStateRes.json();
       return { title, covid19KrData: covid19KrData_yesterday };
+    } else {
+      const title2 = pathname.split("/")[1];
+      const corsProxy2 = "https://cors-anywhere.herokuapp.com";
+      const servicekey2 =
+        "BgwP4pyTado5recbSerXHA93SWAy%2B1AExNGuxbCIHpP4xIhxz%2BJTkNiXkY36oYhzG1L9C6G976iuiX6yPM1oZw%3D%3D";
+      const requestURL = `${corsProxy2}/http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19SidoInfStateJson?serviceKey=${servicekey2}&_type=json`;
+      const covid19SideStateRes2 = await fetch(`${requestURL}`, {
+        headers: { Origin: "openapi.data.go.kr" },
+      });
+      const covid19KrData = await covid19SideStateRes2.json();
+      return { title: title2, covid19KrData };
     }
-    return { title, covid19KrData };
   } catch (e) {
     console.log(e.message);
     return { title: "", covid19KrData: undefined };

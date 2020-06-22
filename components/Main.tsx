@@ -9,8 +9,10 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   .main-contents-wrapper {
-    padding-top: 80px;
-    padding-bottom: 80px;
+    padding-top: 40px;
+    :last-child {
+      padding-bottom: 40px;
+    }
     h1 {
       text-align: left;
       font-size: 40px;
@@ -41,8 +43,10 @@ const Container = styled.div`
       p {
         max-width: 800px;
         display: flex;
-        justify-content: center;
-        margin-top: 40px;
+        padding: 30px 0px;
+        .main-contents-link {
+          max-height: 1.2em;
+        }
       }
     }
   }
@@ -63,7 +67,7 @@ const Main: NextPage = () => {
             />
             <p>
               <Link href={data.href}>
-                <a>{data.a}</a>
+                <a className="main-contents-link">{data.a}</a>
               </Link>
             </p>
           </div>
