@@ -40,6 +40,9 @@ const Container = styled.div`
       }
       p {
         max-width: 800px;
+        display: flex;
+        justify-content: center;
+        margin-top: 40px;
       }
     }
   }
