@@ -8,12 +8,17 @@ class MyDocument extends Document {
   }
   render() {
     return (
-      <Html lang="ko">
+      <Html>
         <Head>
+          <meta
+            name="description"
+            content="hyunjun의 covid19-info입니다. 천천히 둘러 보세요."
+          />
           <meta charSet="utf-8" />
           <meta property="og:image" content={UserData.Img} />
           <meta property="og:title" content={UserData?.title} />
           <meta property="og:description" content={UserData?.descript} />
+          <link rel="manifest" href="/manifest.json" />
         </Head>
         <body>
           <Main />
