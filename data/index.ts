@@ -4,21 +4,21 @@ export const mainData = [
     titleKr: "한국 코로나 상태",
     href: "/coronaKr",
     a: "한국 현황 알아보기",
-    img: "korea.png",
+    img: "korea.PNG",
   },
   {
     titleEng: "Corona Status in World",
     titleKr: "해외 코로나 상태",
     href: "/coronaWr",
     a: "세계 현황 알아보기",
-    img: "world.png",
+    img: "world.PNG",
   },
   {
     titleEng: "Public Mask Sales Pharmacy in Korea",
     titleKr: "공적 마스크 판매 약국",
     href: "/mask",
     a: "공적마스크 판매 약국 검색",
-    img: "mask.png",
+    img: "mask.PNG",
   },
 ];
 
