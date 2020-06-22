@@ -1,7 +1,8 @@
 export const UserData = {
   name: "양현준",
   englishName: "Hyunjun Yang",
-  Img: "blob:https://vercel.com/46ebf9df-0964-4ba4-abd0-c1740f9e2400",
+  Img:
+    "https://lh3.googleusercontent.com/FrydhNDe0Noc-UvvhCyhh8RdvCi_CSwOy-fiZnImFqS5sbzORkdzpV0Gu77E52vjUN5LQOLFGOkPiW41NeYT90rgdmrpyOkQikb1lzAtZLaO0tju2Yf65cXhu-GthZTW6ph-fUwGqLgCX96JCUkyvsFGwF6ImWIBsRcJbBNt3T3Ht3-Oh3P25a9xYNVsB3ySy-O_bxSsdUgyvYvnJtT0FqkhEX4rhPg7XmiPtmlC3U4yne_85MIRQsfce1IiIMY-FQg2HrmFFazDntcavMQlAfqCvs2sWusFnmK-xxx0zQzg33mJK6hbMg_G1FnePDLXoAid28aXefgBzd731Ld28vV9CM8IHjadg3YfdF-B7XpClN36tGHepafLS1QUYYUAwuHLZzrwwLH7PNz4uF6HFZ1QMlotPex8CAMl0nYxCges8TgFYAcoaDtYBGfZoHXk2HC2CUJ4dDIHFvD0AahupSFNQaBEiu6ZS8zaJPFKPs0LkPJzlNIlL5gQH66BQL-M3DfSs5GWzF33Y9ksLilTcPW1QY5Me98fBm2R78-3h3MRe546x7uEp-Rvdqafz4F8eIRbpahst0aUUJQVhAjsxwrXWip46QQbnhlZpwP-giA3Bk3MGsaRHFOkzdPIHVuKKNG2z4WYNo7MwLQFjJDdGTr933cZR3K59KcglkHpovTIre3IfizXjwi5dk-7=w1239-h768-no?authuser=0",
   title: "covid-19-Info_hyunjun",
   descript: "한국의 코로나정보를 모아보는 홈페이지 입니다.",
 };
