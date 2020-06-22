@@ -238,9 +238,13 @@ addr.getInitialProps = async ({ query, pathname }) => {
     const { addr } = query;
     if (addr.toString().split(" ").length === 1) {
       const encoding = encodeURI(addr.toString());
-      const addressDataRes = await fetch(
-        `http://www.juso.go.kr/addrlink/addrLinkApi.do?&resultType=json&confmKey=U01TX0FVVEgyMDIwMDUxMTE4NDA0NDEwOTc0NjU=&keyword=${encoding}`
-      );
+      const corsProxy = `https://cors-anywhere.herokuapp.com`;
+      const addressURL = `${corsProxy}/http://www.juso.go.kr/addrlink/addrLinkApi.do?&resultType=json&confmKey=U01TX0FVVEgyMDIwMDUxMTE4NDA0NDEwOTc0NjU=&keyword=${encoding}`;
+      const addressDataRes = await fetch(`${addressURL}`, {
+        headers: {
+          Origin: "www.juso.go.kr",
+        },
+      });
       const addressData = await addressDataRes.json();
       const address = await addressData.results.juso[0].jibunAddr.split(" ");
       const addressEncoding = encodeURI(
