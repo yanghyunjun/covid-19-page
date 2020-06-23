@@ -877,7 +877,7 @@ const index: NextPage<IProps> = ({ title, covid19KrData }) => {
         <Clock
           format={`YYYY년 MM월 DD일 HH:mm:ss`}
           ticking={true}
-          timezone={`US/Pacific`}
+          timezone={`Asia/Seoul`}
         />
       </div>
       <div className="coronakr-contents-wrapper">
