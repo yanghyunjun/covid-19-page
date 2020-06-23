@@ -4,6 +4,7 @@ import fetch from "isomorphic-unfetch";
 import { NextPage } from "next";
 import MenuBar from "../../components/MenuBar";
 import { CoronaWr } from "../../types/coronaWr";
+import Clock from "react-live-clock";
 
 const Container = styled.div`
   min-height: 100vh;
@@ -40,6 +41,28 @@ const Container = styled.div`
         font-weight: 600;
       }
     }
+  }
+  .update-message {
+    font-size: 1.2em;
+    margin-top: 40px;
+    @media (max-width: 767px) {
+      font-size: 1em;
+    }
+    @media (max-width: 414px) {
+      font-size: 0.8em;
+    }
+    color: gray;
+  }
+  .update-clock {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    @media (max-width: 767px) {
+      font-size: 1em;
+    }
+    @media (max-width: 414px) {
+      font-size: 0.8em;
+    }
+    color: gray;
   }
   .data-button-wrapper {
     display: flex;
@@ -357,6 +380,16 @@ const index: NextPage<IProps> = ({ title, covid19WrData }) => {
       <div className="title-wrapper">
         <div className="title">세계 현황</div>
       </div>
+      <div className="update-message">
+        매일 정오에 데이터가 업데이트 됩니다.
+      </div>
+      <div className="update-clock">
+        <Clock
+          format={`YYYY년 MM월 DD일 HH:mm:ss`}
+          ticking={true}
+          timezone={`US/Pacific`}
+        />
+      </div>
       <div className="data-button-wrapper">
         <div
           className={`${showTotal ? "data-button_onClick" : "data-button"}`}
@@ -508,7 +541,7 @@ index.getInitialProps = async ({ pathname }) => {
   try {
     let date = new Date();
     let hour = date.getHours();
-    if (hour < 9) {
+    if (hour < 12) {
       const title = pathname.split("/")[1];
       const corsProxy = "https://cors-anywhere.herokuapp.com";
       const serviceKey =
@@ -522,7 +555,7 @@ index.getInitialProps = async ({ pathname }) => {
           : today.getMonth() + 1;
       let day = today.getDate() < 10 ? `0${today.getDate()}` : today.getDate();
       let yesterday = `${year}${month}${day}`;
-      const requestURL = `${corsProxy}/http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${serviceKey}&startCreateDt=${yesterday}&_type=json`;
+      const requestURL = `${corsProxy}/http://openapi.data.go.kr/openapi/service/rest/Covid19/getCovid19NatInfStateJson?serviceKey=${serviceKey}&startCreateDt=${yesterday}&endCreateDt=${yesterday}&_type=json`;
       const covid19WorldRes = await fetch(`${requestURL}`, {
         headers: { Origin: "openapi.data.go.kr" },
       });
