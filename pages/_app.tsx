@@ -8,7 +8,7 @@ const MyApp = ({ Component, pageProps }: AppProps & AppInitialProps) => {
     <>
       <GlobalStyle />
       <Header />
-      <Main />
+      <Component {...pageProps} />
     </>
   );
 };
