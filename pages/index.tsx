@@ -6,11 +6,7 @@ import Main from "../components/Main";
 const Container = styled.div``;
 
 const index: NextPage = () => {
-  return (
-    <Container>
-      <Main />
-    </Container>
-  );
+  return <Container>{/* <Main /> */}</Container>;
 };
 
 export default index;
